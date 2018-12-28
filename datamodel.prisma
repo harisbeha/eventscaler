@@ -14,8 +14,8 @@ enum SCALE_STATUS {
 
 type ScaleEvent {
   id: ID! @unique
-  status: SCALE_STATUS 
-  desired_count: Int!
+  status: String 
+  size: Int!
   project: String!
   cluster: String!
   zone: String!

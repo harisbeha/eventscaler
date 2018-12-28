@@ -68,7 +68,7 @@ func (client *Client) ScaleEvent(params ScaleEventWhereUniqueInput) *ScaleEventE
 		params,
 		[2]string{"ScaleEventWhereUniqueInput!", "ScaleEvent"},
 		"scaleEvent",
-		[]string{"id", "desired_count", "project", "cluster", "zone", "pool"})
+		[]string{"id", "status", "size", "project", "cluster", "zone", "pool"})
 
 	return &ScaleEventExec{ret}
 }
@@ -102,7 +102,7 @@ func (client *Client) ScaleEvents(params *ScaleEventsParams) *ScaleEventExecArra
 		wparams,
 		[3]string{"ScaleEventWhereInput", "ScaleEventOrderByInput", "ScaleEvent"},
 		"scaleEvents",
-		[]string{"id", "desired_count", "project", "cluster", "zone", "pool"})
+		[]string{"id", "status", "size", "project", "cluster", "zone", "pool"})
 
 	return &ScaleEventExecArray{ret}
 }
@@ -185,7 +185,7 @@ func (client *Client) CreateScaleEvent(params ScaleEventCreateInput) *ScaleEvent
 		params,
 		[2]string{"ScaleEventCreateInput!", "ScaleEvent"},
 		"createScaleEvent",
-		[]string{"id", "desired_count", "project", "cluster", "zone", "pool"})
+		[]string{"id", "status", "size", "project", "cluster", "zone", "pool"})
 
 	return &ScaleEventExec{ret}
 }
@@ -203,7 +203,7 @@ func (client *Client) UpdateScaleEvent(params ScaleEventUpdateParams) *ScaleEven
 		},
 		[3]string{"ScaleEventUpdateInput!", "ScaleEventWhereUniqueInput!", "ScaleEvent"},
 		"updateScaleEvent",
-		[]string{"id", "desired_count", "project", "cluster", "zone", "pool"})
+		[]string{"id", "status", "size", "project", "cluster", "zone", "pool"})
 
 	return &ScaleEventExec{ret}
 }
@@ -240,7 +240,7 @@ func (client *Client) UpsertScaleEvent(params ScaleEventUpsertParams) *ScaleEven
 		uparams,
 		[4]string{"ScaleEventWhereUniqueInput!", "ScaleEventCreateInput!", "ScaleEventUpdateInput!", "ScaleEvent"},
 		"upsertScaleEvent",
-		[]string{"id", "desired_count", "project", "cluster", "zone", "pool"})
+		[]string{"id", "status", "size", "project", "cluster", "zone", "pool"})
 
 	return &ScaleEventExec{ret}
 }
@@ -250,7 +250,7 @@ func (client *Client) DeleteScaleEvent(params ScaleEventWhereUniqueInput) *Scale
 		params,
 		[2]string{"ScaleEventWhereUniqueInput!", "ScaleEvent"},
 		"deleteScaleEvent",
-		[]string{"id", "desired_count", "project", "cluster", "zone", "pool"})
+		[]string{"id", "status", "size", "project", "cluster", "zone", "pool"})
 
 	return &ScaleEventExec{ret}
 }
@@ -343,24 +343,24 @@ func (client *Client) DeleteManyUsers(params *UserWhereInput) *BatchPayloadExec 
 type ScaleEventOrderByInput string
 
 const (
-	ScaleEventOrderByInputIDAsc            ScaleEventOrderByInput = "id_ASC"
-	ScaleEventOrderByInputIDDesc           ScaleEventOrderByInput = "id_DESC"
-	ScaleEventOrderByInputStatusAsc        ScaleEventOrderByInput = "status_ASC"
-	ScaleEventOrderByInputStatusDesc       ScaleEventOrderByInput = "status_DESC"
-	ScaleEventOrderByInputDesiredCountAsc  ScaleEventOrderByInput = "desired_count_ASC"
-	ScaleEventOrderByInputDesiredCountDesc ScaleEventOrderByInput = "desired_count_DESC"
-	ScaleEventOrderByInputProjectAsc       ScaleEventOrderByInput = "project_ASC"
-	ScaleEventOrderByInputProjectDesc      ScaleEventOrderByInput = "project_DESC"
-	ScaleEventOrderByInputClusterAsc       ScaleEventOrderByInput = "cluster_ASC"
-	ScaleEventOrderByInputClusterDesc      ScaleEventOrderByInput = "cluster_DESC"
-	ScaleEventOrderByInputZoneAsc          ScaleEventOrderByInput = "zone_ASC"
-	ScaleEventOrderByInputZoneDesc         ScaleEventOrderByInput = "zone_DESC"
-	ScaleEventOrderByInputPoolAsc          ScaleEventOrderByInput = "pool_ASC"
-	ScaleEventOrderByInputPoolDesc         ScaleEventOrderByInput = "pool_DESC"
-	ScaleEventOrderByInputCreatedAtAsc     ScaleEventOrderByInput = "createdAt_ASC"
-	ScaleEventOrderByInputCreatedAtDesc    ScaleEventOrderByInput = "createdAt_DESC"
-	ScaleEventOrderByInputUpdatedAtAsc     ScaleEventOrderByInput = "updatedAt_ASC"
-	ScaleEventOrderByInputUpdatedAtDesc    ScaleEventOrderByInput = "updatedAt_DESC"
+	ScaleEventOrderByInputIDAsc         ScaleEventOrderByInput = "id_ASC"
+	ScaleEventOrderByInputIDDesc        ScaleEventOrderByInput = "id_DESC"
+	ScaleEventOrderByInputStatusAsc     ScaleEventOrderByInput = "status_ASC"
+	ScaleEventOrderByInputStatusDesc    ScaleEventOrderByInput = "status_DESC"
+	ScaleEventOrderByInputSizeAsc       ScaleEventOrderByInput = "size_ASC"
+	ScaleEventOrderByInputSizeDesc      ScaleEventOrderByInput = "size_DESC"
+	ScaleEventOrderByInputProjectAsc    ScaleEventOrderByInput = "project_ASC"
+	ScaleEventOrderByInputProjectDesc   ScaleEventOrderByInput = "project_DESC"
+	ScaleEventOrderByInputClusterAsc    ScaleEventOrderByInput = "cluster_ASC"
+	ScaleEventOrderByInputClusterDesc   ScaleEventOrderByInput = "cluster_DESC"
+	ScaleEventOrderByInputZoneAsc       ScaleEventOrderByInput = "zone_ASC"
+	ScaleEventOrderByInputZoneDesc      ScaleEventOrderByInput = "zone_DESC"
+	ScaleEventOrderByInputPoolAsc       ScaleEventOrderByInput = "pool_ASC"
+	ScaleEventOrderByInputPoolDesc      ScaleEventOrderByInput = "pool_DESC"
+	ScaleEventOrderByInputCreatedAtAsc  ScaleEventOrderByInput = "createdAt_ASC"
+	ScaleEventOrderByInputCreatedAtDesc ScaleEventOrderByInput = "createdAt_DESC"
+	ScaleEventOrderByInputUpdatedAtAsc  ScaleEventOrderByInput = "updatedAt_ASC"
+	ScaleEventOrderByInputUpdatedAtDesc ScaleEventOrderByInput = "updatedAt_DESC"
 )
 
 type UserOrderByInput string
@@ -384,19 +384,8 @@ const (
 	MutationTypeDeleted MutationType = "DELETED"
 )
 
-type ScaleStatus string
-
-const (
-	ScaleStatusCreated    ScaleStatus = "CREATED"
-	ScaleStatusInProgress ScaleStatus = "IN_PROGRESS"
-	ScaleStatusExpired    ScaleStatus = "EXPIRED"
-	ScaleStatusFailed     ScaleStatus = "FAILED"
-	ScaleStatusRejected   ScaleStatus = "REJECTED"
-	ScaleStatusComplete   ScaleStatus = "COMPLETE"
-)
-
-type UserUpdateInput struct {
-	Name *string `json:"name,omitempty"`
+type UserCreateInput struct {
+	Name string `json:"name"`
 }
 
 type ScaleEventWhereUniqueInput struct {
@@ -404,12 +393,12 @@ type ScaleEventWhereUniqueInput struct {
 }
 
 type ScaleEventUpdateInput struct {
-	Status       *ScaleStatus `json:"status,omitempty"`
-	DesiredCount *int32       `json:"desired_count,omitempty"`
-	Project      *string      `json:"project,omitempty"`
-	Cluster      *string      `json:"cluster,omitempty"`
-	Zone         *string      `json:"zone,omitempty"`
-	Pool         *string      `json:"pool,omitempty"`
+	Status  *string `json:"status,omitempty"`
+	Size    *int32  `json:"size,omitempty"`
+	Project *string `json:"project,omitempty"`
+	Cluster *string `json:"cluster,omitempty"`
+	Zone    *string `json:"zone,omitempty"`
+	Pool    *string `json:"pool,omitempty"`
 }
 
 type ScaleEventWhereInput struct {
@@ -427,18 +416,28 @@ type ScaleEventWhereInput struct {
 	IDNotStartsWith      *string                `json:"id_not_starts_with,omitempty"`
 	IDEndsWith           *string                `json:"id_ends_with,omitempty"`
 	IDNotEndsWith        *string                `json:"id_not_ends_with,omitempty"`
-	Status               *ScaleStatus           `json:"status,omitempty"`
-	StatusNot            *ScaleStatus           `json:"status_not,omitempty"`
-	StatusIn             []ScaleStatus          `json:"status_in,omitempty"`
-	StatusNotIn          []ScaleStatus          `json:"status_not_in,omitempty"`
-	DesiredCount         *int32                 `json:"desired_count,omitempty"`
-	DesiredCountNot      *int32                 `json:"desired_count_not,omitempty"`
-	DesiredCountIn       []int32                `json:"desired_count_in,omitempty"`
-	DesiredCountNotIn    []int32                `json:"desired_count_not_in,omitempty"`
-	DesiredCountLt       *int32                 `json:"desired_count_lt,omitempty"`
-	DesiredCountLte      *int32                 `json:"desired_count_lte,omitempty"`
-	DesiredCountGt       *int32                 `json:"desired_count_gt,omitempty"`
-	DesiredCountGte      *int32                 `json:"desired_count_gte,omitempty"`
+	Status               *string                `json:"status,omitempty"`
+	StatusNot            *string                `json:"status_not,omitempty"`
+	StatusIn             []string               `json:"status_in,omitempty"`
+	StatusNotIn          []string               `json:"status_not_in,omitempty"`
+	StatusLt             *string                `json:"status_lt,omitempty"`
+	StatusLte            *string                `json:"status_lte,omitempty"`
+	StatusGt             *string                `json:"status_gt,omitempty"`
+	StatusGte            *string                `json:"status_gte,omitempty"`
+	StatusContains       *string                `json:"status_contains,omitempty"`
+	StatusNotContains    *string                `json:"status_not_contains,omitempty"`
+	StatusStartsWith     *string                `json:"status_starts_with,omitempty"`
+	StatusNotStartsWith  *string                `json:"status_not_starts_with,omitempty"`
+	StatusEndsWith       *string                `json:"status_ends_with,omitempty"`
+	StatusNotEndsWith    *string                `json:"status_not_ends_with,omitempty"`
+	Size                 *int32                 `json:"size,omitempty"`
+	SizeNot              *int32                 `json:"size_not,omitempty"`
+	SizeIn               []int32                `json:"size_in,omitempty"`
+	SizeNotIn            []int32                `json:"size_not_in,omitempty"`
+	SizeLt               *int32                 `json:"size_lt,omitempty"`
+	SizeLte              *int32                 `json:"size_lte,omitempty"`
+	SizeGt               *int32                 `json:"size_gt,omitempty"`
+	SizeGte              *int32                 `json:"size_gte,omitempty"`
 	Project              *string                `json:"project,omitempty"`
 	ProjectNot           *string                `json:"project_not,omitempty"`
 	ProjectIn            []string               `json:"project_in,omitempty"`
@@ -546,12 +545,12 @@ type UserWhereInput struct {
 }
 
 type ScaleEventCreateInput struct {
-	Status       *ScaleStatus `json:"status,omitempty"`
-	DesiredCount int32        `json:"desired_count"`
-	Project      string       `json:"project"`
-	Cluster      string       `json:"cluster"`
-	Zone         string       `json:"zone"`
-	Pool         string       `json:"pool"`
+	Status  *string `json:"status,omitempty"`
+	Size    int32   `json:"size"`
+	Project string  `json:"project"`
+	Cluster string  `json:"cluster"`
+	Zone    string  `json:"zone"`
+	Pool    string  `json:"pool"`
 }
 
 type UserWhereUniqueInput struct {
@@ -563,16 +562,12 @@ type UserUpdateManyMutationInput struct {
 }
 
 type ScaleEventUpdateManyMutationInput struct {
-	Status       *ScaleStatus `json:"status,omitempty"`
-	DesiredCount *int32       `json:"desired_count,omitempty"`
-	Project      *string      `json:"project,omitempty"`
-	Cluster      *string      `json:"cluster,omitempty"`
-	Zone         *string      `json:"zone,omitempty"`
-	Pool         *string      `json:"pool,omitempty"`
-}
-
-type UserCreateInput struct {
-	Name string `json:"name"`
+	Status  *string `json:"status,omitempty"`
+	Size    *int32  `json:"size,omitempty"`
+	Project *string `json:"project,omitempty"`
+	Cluster *string `json:"cluster,omitempty"`
+	Zone    *string `json:"zone,omitempty"`
+	Pool    *string `json:"pool,omitempty"`
 }
 
 type UserSubscriptionWhereInput struct {
@@ -584,6 +579,10 @@ type UserSubscriptionWhereInput struct {
 	And                        []UserSubscriptionWhereInput `json:"AND,omitempty"`
 	Or                         []UserSubscriptionWhereInput `json:"OR,omitempty"`
 	Not                        []UserSubscriptionWhereInput `json:"NOT,omitempty"`
+}
+
+type UserUpdateInput struct {
+	Name *string `json:"name,omitempty"`
 }
 
 type UserEdgeExec struct {
@@ -849,7 +848,7 @@ func (instance *ScaleEventSubscriptionPayloadExec) Node() *ScaleEventExec {
 		nil,
 		[2]string{"", "ScaleEvent"},
 		"node",
-		[]string{"id", "desired_count", "project", "cluster", "zone", "pool"})
+		[]string{"id", "status", "size", "project", "cluster", "zone", "pool"})
 
 	return &ScaleEventExec{ret}
 }
@@ -860,7 +859,7 @@ func (instance *ScaleEventSubscriptionPayloadExec) PreviousValues() *ScaleEventP
 		nil,
 		[2]string{"", "ScaleEventPreviousValues"},
 		"previousValues",
-		[]string{"id", "desired_count", "project", "cluster", "zone", "pool"})
+		[]string{"id", "status", "size", "project", "cluster", "zone", "pool"})
 
 	return &ScaleEventPreviousValuesExec{ret}
 }
@@ -926,12 +925,13 @@ func (instance ScaleEventPreviousValuesExecArray) Exec(ctx context.Context) ([]S
 }
 
 type ScaleEventPreviousValues struct {
-	ID           string `json:"id"`
-	DesiredCount int32  `json:"desired_count"`
-	Project      string `json:"project"`
-	Cluster      string `json:"cluster"`
-	Zone         string `json:"zone"`
-	Pool         string `json:"pool"`
+	ID      string  `json:"id"`
+	Status  *string `json:"status,omitempty"`
+	Size    int32   `json:"size"`
+	Project string  `json:"project"`
+	Cluster string  `json:"cluster"`
+	Zone    string  `json:"zone"`
+	Pool    string  `json:"pool"`
 }
 
 type ScaleEventEdgeExec struct {
@@ -944,7 +944,7 @@ func (instance *ScaleEventEdgeExec) Node() *ScaleEventExec {
 		nil,
 		[2]string{"", "ScaleEvent"},
 		"node",
-		[]string{"id", "desired_count", "project", "cluster", "zone", "pool"})
+		[]string{"id", "status", "size", "project", "cluster", "zone", "pool"})
 
 	return &ScaleEventExec{ret}
 }
@@ -1045,12 +1045,13 @@ func (instance ScaleEventExecArray) Exec(ctx context.Context) ([]ScaleEvent, err
 }
 
 type ScaleEvent struct {
-	ID           string `json:"id"`
-	DesiredCount int32  `json:"desired_count"`
-	Project      string `json:"project"`
-	Cluster      string `json:"cluster"`
-	Zone         string `json:"zone"`
-	Pool         string `json:"pool"`
+	ID      string  `json:"id"`
+	Status  *string `json:"status,omitempty"`
+	Size    int32   `json:"size"`
+	Project string  `json:"project"`
+	Cluster string  `json:"cluster"`
+	Zone    string  `json:"zone"`
+	Pool    string  `json:"pool"`
 }
 
 type UserSubscriptionPayloadExec struct {
