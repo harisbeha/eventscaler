@@ -1,0 +1,21 @@
+type User {
+  id: ID! @unique
+  name: String!
+}
+
+enum SCALE_STATUS {
+  CREATED,
+  IN_PROGRESS,
+  EXPIRED,
+  FAILED,
+  REJECTED
+}
+
+type ScaleEvent {
+  id: ID! @unique
+  status: SCALE_STATUS 
+  desired_count: Int!
+  project: String!
+  cluster: String!
+  pool: String!
+}
