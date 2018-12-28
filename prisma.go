@@ -390,6 +390,7 @@ const (
 	ScaleStatusExpired    ScaleStatus = "EXPIRED"
 	ScaleStatusFailed     ScaleStatus = "FAILED"
 	ScaleStatusRejected   ScaleStatus = "REJECTED"
+	ScaleStatusComplete   ScaleStatus = "COMPLETE"
 )
 
 type UserUpdateInput struct {

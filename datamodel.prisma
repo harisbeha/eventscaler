@@ -8,7 +8,8 @@ enum SCALE_STATUS {
   IN_PROGRESS,
   EXPIRED,
   FAILED,
-  REJECTED
+  REJECTED,
+  COMPLETE
 }
 
 type ScaleEvent {
