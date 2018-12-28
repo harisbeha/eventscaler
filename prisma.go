@@ -68,7 +68,7 @@ func (client *Client) ScaleEvent(params ScaleEventWhereUniqueInput) *ScaleEventE
 		params,
 		[2]string{"ScaleEventWhereUniqueInput!", "ScaleEvent"},
 		"scaleEvent",
-		[]string{"id", "desired_count", "project", "cluster", "pool"})
+		[]string{"id", "desired_count", "project", "cluster", "zone", "pool"})
 
 	return &ScaleEventExec{ret}
 }
@@ -102,7 +102,7 @@ func (client *Client) ScaleEvents(params *ScaleEventsParams) *ScaleEventExecArra
 		wparams,
 		[3]string{"ScaleEventWhereInput", "ScaleEventOrderByInput", "ScaleEvent"},
 		"scaleEvents",
-		[]string{"id", "desired_count", "project", "cluster", "pool"})
+		[]string{"id", "desired_count", "project", "cluster", "zone", "pool"})
 
 	return &ScaleEventExecArray{ret}
 }
@@ -185,7 +185,7 @@ func (client *Client) CreateScaleEvent(params ScaleEventCreateInput) *ScaleEvent
 		params,
 		[2]string{"ScaleEventCreateInput!", "ScaleEvent"},
 		"createScaleEvent",
-		[]string{"id", "desired_count", "project", "cluster", "pool"})
+		[]string{"id", "desired_count", "project", "cluster", "zone", "pool"})
 
 	return &ScaleEventExec{ret}
 }
@@ -203,7 +203,7 @@ func (client *Client) UpdateScaleEvent(params ScaleEventUpdateParams) *ScaleEven
 		},
 		[3]string{"ScaleEventUpdateInput!", "ScaleEventWhereUniqueInput!", "ScaleEvent"},
 		"updateScaleEvent",
-		[]string{"id", "desired_count", "project", "cluster", "pool"})
+		[]string{"id", "desired_count", "project", "cluster", "zone", "pool"})
 
 	return &ScaleEventExec{ret}
 }
@@ -240,7 +240,7 @@ func (client *Client) UpsertScaleEvent(params ScaleEventUpsertParams) *ScaleEven
 		uparams,
 		[4]string{"ScaleEventWhereUniqueInput!", "ScaleEventCreateInput!", "ScaleEventUpdateInput!", "ScaleEvent"},
 		"upsertScaleEvent",
-		[]string{"id", "desired_count", "project", "cluster", "pool"})
+		[]string{"id", "desired_count", "project", "cluster", "zone", "pool"})
 
 	return &ScaleEventExec{ret}
 }
@@ -250,7 +250,7 @@ func (client *Client) DeleteScaleEvent(params ScaleEventWhereUniqueInput) *Scale
 		params,
 		[2]string{"ScaleEventWhereUniqueInput!", "ScaleEvent"},
 		"deleteScaleEvent",
-		[]string{"id", "desired_count", "project", "cluster", "pool"})
+		[]string{"id", "desired_count", "project", "cluster", "zone", "pool"})
 
 	return &ScaleEventExec{ret}
 }
@@ -353,6 +353,8 @@ const (
 	ScaleEventOrderByInputProjectDesc      ScaleEventOrderByInput = "project_DESC"
 	ScaleEventOrderByInputClusterAsc       ScaleEventOrderByInput = "cluster_ASC"
 	ScaleEventOrderByInputClusterDesc      ScaleEventOrderByInput = "cluster_DESC"
+	ScaleEventOrderByInputZoneAsc          ScaleEventOrderByInput = "zone_ASC"
+	ScaleEventOrderByInputZoneDesc         ScaleEventOrderByInput = "zone_DESC"
 	ScaleEventOrderByInputPoolAsc          ScaleEventOrderByInput = "pool_ASC"
 	ScaleEventOrderByInputPoolDesc         ScaleEventOrderByInput = "pool_DESC"
 	ScaleEventOrderByInputCreatedAtAsc     ScaleEventOrderByInput = "createdAt_ASC"
@@ -406,6 +408,7 @@ type ScaleEventUpdateInput struct {
 	DesiredCount *int32       `json:"desired_count,omitempty"`
 	Project      *string      `json:"project,omitempty"`
 	Cluster      *string      `json:"cluster,omitempty"`
+	Zone         *string      `json:"zone,omitempty"`
 	Pool         *string      `json:"pool,omitempty"`
 }
 
@@ -464,6 +467,20 @@ type ScaleEventWhereInput struct {
 	ClusterNotStartsWith *string                `json:"cluster_not_starts_with,omitempty"`
 	ClusterEndsWith      *string                `json:"cluster_ends_with,omitempty"`
 	ClusterNotEndsWith   *string                `json:"cluster_not_ends_with,omitempty"`
+	Zone                 *string                `json:"zone,omitempty"`
+	ZoneNot              *string                `json:"zone_not,omitempty"`
+	ZoneIn               []string               `json:"zone_in,omitempty"`
+	ZoneNotIn            []string               `json:"zone_not_in,omitempty"`
+	ZoneLt               *string                `json:"zone_lt,omitempty"`
+	ZoneLte              *string                `json:"zone_lte,omitempty"`
+	ZoneGt               *string                `json:"zone_gt,omitempty"`
+	ZoneGte              *string                `json:"zone_gte,omitempty"`
+	ZoneContains         *string                `json:"zone_contains,omitempty"`
+	ZoneNotContains      *string                `json:"zone_not_contains,omitempty"`
+	ZoneStartsWith       *string                `json:"zone_starts_with,omitempty"`
+	ZoneNotStartsWith    *string                `json:"zone_not_starts_with,omitempty"`
+	ZoneEndsWith         *string                `json:"zone_ends_with,omitempty"`
+	ZoneNotEndsWith      *string                `json:"zone_not_ends_with,omitempty"`
 	Pool                 *string                `json:"pool,omitempty"`
 	PoolNot              *string                `json:"pool_not,omitempty"`
 	PoolIn               []string               `json:"pool_in,omitempty"`
@@ -533,6 +550,7 @@ type ScaleEventCreateInput struct {
 	DesiredCount int32        `json:"desired_count"`
 	Project      string       `json:"project"`
 	Cluster      string       `json:"cluster"`
+	Zone         string       `json:"zone"`
 	Pool         string       `json:"pool"`
 }
 
@@ -549,6 +567,7 @@ type ScaleEventUpdateManyMutationInput struct {
 	DesiredCount *int32       `json:"desired_count,omitempty"`
 	Project      *string      `json:"project,omitempty"`
 	Cluster      *string      `json:"cluster,omitempty"`
+	Zone         *string      `json:"zone,omitempty"`
 	Pool         *string      `json:"pool,omitempty"`
 }
 
@@ -830,7 +849,7 @@ func (instance *ScaleEventSubscriptionPayloadExec) Node() *ScaleEventExec {
 		nil,
 		[2]string{"", "ScaleEvent"},
 		"node",
-		[]string{"id", "desired_count", "project", "cluster", "pool"})
+		[]string{"id", "desired_count", "project", "cluster", "zone", "pool"})
 
 	return &ScaleEventExec{ret}
 }
@@ -841,7 +860,7 @@ func (instance *ScaleEventSubscriptionPayloadExec) PreviousValues() *ScaleEventP
 		nil,
 		[2]string{"", "ScaleEventPreviousValues"},
 		"previousValues",
-		[]string{"id", "desired_count", "project", "cluster", "pool"})
+		[]string{"id", "desired_count", "project", "cluster", "zone", "pool"})
 
 	return &ScaleEventPreviousValuesExec{ret}
 }
@@ -911,6 +930,7 @@ type ScaleEventPreviousValues struct {
 	DesiredCount int32  `json:"desired_count"`
 	Project      string `json:"project"`
 	Cluster      string `json:"cluster"`
+	Zone         string `json:"zone"`
 	Pool         string `json:"pool"`
 }
 
@@ -924,7 +944,7 @@ func (instance *ScaleEventEdgeExec) Node() *ScaleEventExec {
 		nil,
 		[2]string{"", "ScaleEvent"},
 		"node",
-		[]string{"id", "desired_count", "project", "cluster", "pool"})
+		[]string{"id", "desired_count", "project", "cluster", "zone", "pool"})
 
 	return &ScaleEventExec{ret}
 }
@@ -1029,6 +1049,7 @@ type ScaleEvent struct {
 	DesiredCount int32  `json:"desired_count"`
 	Project      string `json:"project"`
 	Cluster      string `json:"cluster"`
+	Zone         string `json:"zone"`
 	Pool         string `json:"pool"`
 }
 

@@ -18,5 +18,6 @@ type ScaleEvent {
   desired_count: Int!
   project: String!
   cluster: String!
+  zone: String!
   pool: String!
 }
